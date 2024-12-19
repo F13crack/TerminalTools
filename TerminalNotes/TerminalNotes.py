@@ -24,10 +24,15 @@ def add_note(title, content):
             data = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
         data={}
-    data[title] = content
-    with open("data_TNotes.json", 'w') as file:
-        json.dump(data, file, indent=4)
-    return True
+    if title in data:
+        uSure = input(f"{title} already exists. Do you want to overwrite \"{title}\" ? (Y/N): ")
+        if uSure:
+            if uSure.lower() == "y":
+                data[title] = content
+                with open("data_TNotes.json", 'w') as file:
+                    json.dump(data, file, indent=4)
+                return True
+            else: return
 
 # ----------------------------------------
 # delete note
@@ -81,8 +86,8 @@ def main():
         if args.title == None or args.content == None:
             parser.error("the following arguments are required in comination with '-n'/'--new': title content")
         else:
-            add_note(args.title, args.content)
-            print(f"Note {args.title} was created successfully")
+            if add_note(args.title, args.content):
+                print(f"Note {args.title} was created successfully")
 
     elif args.delete and args.title:
         delete_note(args.title)
