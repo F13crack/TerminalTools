@@ -6,12 +6,12 @@ import argparse
 # ----------------------------------------
 def read_json():
     try:
-        with open("C:\\Users\\luca.mauro\\Documents\\Scripts\\TerminalTools\\data_TNotes.json", "r") as f:
+        with open("Your/Path", "r") as f:
             data = json.load(f)
         return data
     except:
         data = {}
-        with open("C:\\Users\\luca.mauro\\Documents\\Scripts\\TerminalTools\\data_TNotes.json", "w") as f:
+        with open("Your/Path", "w") as f:
             json.dump(data, f, indent=4)
         read_json()
 
@@ -20,7 +20,7 @@ def read_json():
 # ----------------------------------------
 def add_note(title, content):
     try:
-        with open("C:\\Users\\luca.mauro\\Documents\\Scripts\\TerminalTools\\data_TNotes.json", 'r') as file:
+        with open("Your/Path", 'r') as file:
             data = json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
         data={}
@@ -29,7 +29,7 @@ def add_note(title, content):
         if uSure:
             if uSure.lower() == "y":
                 data[title] = content
-                with open("C:\\Users\\luca.mauro\\Documents\\Scripts\\TerminalTools\\data_TNotes.json", 'w') as file:
+                with open("Your/Path", 'w') as file:
                     json.dump(data, file, indent=4)
                 return True
             else: return
@@ -47,7 +47,7 @@ def delete_note(title):
             elif uSure.lower() == "y":
                 del data[title]
                 print("\n>> Note '" + title + "' successfully deleted")
-                with open("C:\\Users\\luca.mauro\\Documents\\Scripts\\TerminalTools\\data_TNotes.json", 'w') as file:
+                with open("Your/Path", 'w') as file:
                     json.dump(data, file, indent=4)
                     return
     else:
@@ -59,7 +59,7 @@ def delete_note(title):
 def show_note(title):
     data = read_json()
     if title in data:
-        with open("C:\\Users\\luca.mauro\\Documents\\Scripts\\TerminalTools\\data_TNotes.json", 'r') as file:
+        with open("Your/Path", 'r') as file:
             obj = json.load(file)
             title_len = len(title)
             return f"\nNote {title}:\n"+ "‾"*(title_len + 6) + f"\n{obj[title]}\n\n>> End"
